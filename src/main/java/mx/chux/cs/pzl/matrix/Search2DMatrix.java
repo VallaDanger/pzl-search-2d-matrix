@@ -24,11 +24,20 @@ public class Search2DMatrix extends Puzzle<Boolean> {
 
     @Override
     public Boolean bruteForceSolution() {
-        throw new IllegalAccessError();
+        for( int row = 0 ; row < this.rows ; row++ ) {
+            for( int col = 0 ; col < this.cols ; col++ ) {
+                tick();
+                if( this.target == get(row, col) ) {
+                    return Boolean.TRUE;
+                }
+            }
+        }
+        return Boolean.FALSE;
     }
 
     @Override
     public Boolean optimalSolution() {
+        // time complexity: O(R+C)
         
         if( this.rows == 0 ) {
             return Boolean.FALSE;
@@ -52,8 +61,14 @@ public class Search2DMatrix extends Puzzle<Boolean> {
                 return Boolean.TRUE;
             }
             else if( this.target > value ) {
+                // if target is greater than current element
+                // then it cannot be to its left, it must be
+                // further towards the bottom of current column
                 row += 1;
             } else {
+                // if target is lesser than current element
+                // then it cannot be towards bottom, it must be
+                // further towards the left of the current row.
                 col -= 1;
             }
         }
